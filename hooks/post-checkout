@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Configuration
+BUCKET="devkitassets"
+FILE_KEY="devkit.rar"
+OUTPUT_FILE="devkit.rar"
+
+echo "Updataing S3 asset link...."
+
+#1.  Generate the URL using AWS CLI
+# We set it for 7 days, max for presigned URLs
+URL=$(aws s3 presign s3://$BUCKET/$FILE_KEY --expires-in 604800)
+
+#2.  Save it to a file in the project directory
+echo $URL > "./$OUTPUT_FILE"
+
+echo "Presigned URL updated in $OUTPUT_FILE"
