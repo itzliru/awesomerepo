@@ -3,15 +3,17 @@
 # Configuration
 BUCKET="devkitassets"
 FILE_KEY="devkit.rar"
-OUTPUT_FILE="devkit.rar"
+LOCAL_DESTINATION="devkit.rar"
 
-echo "Updataing S3 asset link...."
+echo "Checking S3 asset: $FILE_KEY..."
 
-#1.  Generate the URL using AWS CLI
-# We set it for 7 days, max for presigned URLs
-URL=$(aws s3 presign s3://$BUCKET/$FILE_KEY --expires-in 604800)
+# Use 'aws s3 cp' to download the file directly.
+# This uses your 'aws configure' credentials.
+aws s3 cp s3://$BUCKET/$FILE_KEY $LOCAL_DESTINATION
 
-#2.  Save it to a file in the project directory
-echo $URL > "./$OUTPUT_FILE"
-
-echo "Presigned URL updated in $OUTPUT_FILE"
+if [ $? -eq 0 ]; then
+    echo "Successfully downloaded $FILE_KEY to $LOCAL_DESTINATION"
+else
+    echo "Error: Download failed. Check your internet or AWS permissions."
+    exit 1
+fi
