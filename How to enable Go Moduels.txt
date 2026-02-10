@@ -1,0 +1,371 @@
+after installing Go
+open CMD
+type:
+go version 
+This makes sure its installed
+goto repo "Note the path if go is installed on C drive will be C\User\go\bin"
+cd 'Drive:\RepoFolder\FolderPath
+make a file here as a .go "you dont have to do it in cmd or shell"
+Example
+golang```
+package main
+
+import "fmt" <- formated io
+
+func main() {
+ fmt.Println("Hello from go")
+}
+
+
+
+```
+IMPORTANT
+in command promt do
+
+cd .\goscriptfolder\ <- go where the script is at change dir to it so your on its position obvoiusly
+type:
+
+go mod init name  @name is the name of the moduel your making. name it whatever the script is called
+it will say after:
+
+go: creating new go.mod: module name
+
+go: to add module requirements and sums:
+go mod tidy
+
+
+you will build with Cmake later in Windows PowerShell AFTER YOUR CMAKELIST IS MADE and VS STUDIO 2026 IS SETUP here like this for cpp and c scripts 
+EXAMPLE
+
+"'E:\cmake\bin\cmake.exe' --build " <- Location where cmake.exe is located. COULD BE ANYWHERE YOU PUT IT LIKE IF YOU INSTALLED CMAKE ON C DRIVE 
+"'G:\Repos2\UsingLLVM\build\EngineClean' --config Release" <- configured output file
+
+Full buildcommand
+
+& 'C:\cmake\bin\cmake.exe' --build 'E:\Repos\HTTPParserProject\build\ParserProgram' --config Release
+could also do build full and other additives
+
+
+
+Chat gippity version
+
+Simple How-To: Go + CMake (Windows)
+Go setup (quick check)
+
+After installing Go:
+
+Open Command Prompt
+
+Type:
+
+go version
+
+
+If it prints a version, Go is installed correctly.
+
+Note:
+If Go was installed on the C drive, the default path is usually:
+C:\Users\<YourUser>\go\bin
+
+Create a Go file
+
+Go to your repo folder
+
+cd Drive:\RepoFolder\FolderPath
+
+
+Create a .go file (you do not need to do this in CMD)
+
+Example main.go:
+
+package main
+
+import "fmt" // formatted IO
+
+func main() {
+    fmt.Println("Hello from Go")
+}
+
+Initialize Go module (IMPORTANT)
+
+In Command Prompt, change directory to where the Go file is:
+
+cd .\goscriptfolder\
+
+
+Initialize the module:
+
+go mod init name
+
+
+name can be anything — usually the project or script name.
+
+You should see:
+
+go: creating new go.mod: module name
+
+
+Clean up dependencies:
+
+go mod tidy
+
+
+At this point, your Go side is ready.
+
+CMake + C++ build steps (Windows)
+
+These steps assume:
+
+Visual Studio 2026 is installed
+
+CMake is installed (any location is fine)
+
+You are building a C++ project (for example, your HTTP parser)
+
+Folder layout (recommended)
+HTTPParserProject/
+├── CMakeLists.txt
+├── src/
+│   └── main.cpp
+└── build/
+
+Example CMakeLists.txt
+cmake_minimum_required(VERSION 3.26)
+project(HTTPParser LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(ParserProgram
+    src/main.cpp
+)
+
+Configure the build (FIRST STEP)
+
+Open Windows PowerShell (recommended over CMD):
+
+cd E:\Repos\HTTPParserProject
+
+
+Run CMake configure:
+
+& 'C:\cmake\bin\cmake.exe' -S . -B build
+
+
+What this does:
+
+-S . → source directory (where CMakeLists.txt is)
+
+-B build → output build folder
+
+Detects Visual Studio automatically
+
+Build the project (SECOND STEP)
+
+After configuration succeeds:
+
+& 'C:\cmake\bin\cmake.exe' --build 'E:\Repos\HTTPParserProject\build' --config Release
+
+
+Explanation:
+
+--build → tells CMake to compile
+
+--config Release → Release build (use Debug if needed)
+
+Output location
+
+Your compiled .exe will be located at:
+
+build\Release\ParserProgram.exe
+
+Notes / Tips
+
+CMake can be installed anywhere (C drive, E drive, etc.)
+
+Always configure first, then build
+
+If you change CMakeLists.txt, re-run the configure command
+
+You can also open the generated .sln in Visual Studio if you want IDE debugging
+
+
+
+VISUAL STUDIO STUFF
+
+Visual Studio 2026 (Latest) — Prerequisites & Setup (Windows)
+
+⚠️ Important
+
+Visual Studio ≠ VS Code
+
+CMake uses Visual Studio (MSVC toolchain), not VS Code
+
+VS Code is optional and does not replace Visual Studio
+
+1. Download Visual Studio (Latest)
+
+Go to the official site:
+https://visualstudio.microsoft.com/
+
+Download Visual Studio Community (free)
+
+Run the installer
+
+2. REQUIRED Workloads (DO NOT SKIP)
+
+When the installer opens, select:
+
+✅ Desktop development with C++ (MANDATORY)
+
+This installs:
+
+MSVC compiler (cl.exe)
+
+Windows SDK
+
+MSBuild
+
+CMake integration support
+
+3. REQUIRED Individual Components
+
+Click “Individual components” tab and make sure these are checked:
+
+Compilers & Toolchains
+
+✅ MSVC v143 – VS 2022 C++ x64/x86 build tools
+
+✅ C++ CMake tools for Windows
+
+✅ C++ ATL (safe to have, not required but common)
+
+✅ C++ core features
+
+Windows SDK
+
+✅ Windows 10 SDK (10.0.19041+)
+
+OR
+
+✅ Windows 11 SDK (latest available)
+
+You only need one Windows SDK.
+
+4. Optional but Strongly Recommended
+
+These make life easier:
+
+☑ Git for Windows
+
+☑ GitHub integration
+
+☑ AddressSanitizer (C++)
+
+☑ C++ profiling tools
+
+5. Install & Wait
+
+Click Install and let it finish.
+This can take a while.
+
+After install:
+
+Restart Windows (recommended)
+
+6. Verify Visual Studio Toolchain
+
+Open x64 Native Tools Command Prompt for VS
+
+You can find it by typing this into Start:
+
+x64 Native Tools Command Prompt for VS
+
+
+Then type:
+
+cl
+
+
+If you see compiler output (not an error), MSVC is installed correctly.
+
+7. Verify CMake Integration (IMPORTANT)
+
+Visual Studio ships with CMake, but you can also use your own CMake install.
+
+Check Visual Studio’s bundled CMake:
+
+cmake --version
+
+
+If that works, you’re good.
+
+If not, install standalone CMake:
+https://cmake.org/download/
+
+During install:
+
+✔ “Add CMake to system PATH”
+
+8. Visual Studio Version Naming (Important Clarity)
+
+As of now:
+
+Visual Studio 2022 is the current toolchain
+
+Even if marketed later (2025 / 2026 timeframe), it still:
+
+Uses MSVC v143
+
+Uses the VS 17.x generator internally
+
+CMake will report something like:
+
+Visual Studio 17 2022
+
+
+This is normal and correct, even in 2026.
+
+9. Confirm CMake Can See Visual Studio
+
+From PowerShell:
+
+cmake -G
+
+
+You should see:
+
+Visual Studio 17 2022
+
+
+If it appears, CMake can generate builds correctly.
+
+10. (Optional) Using VS Code
+
+VS Code is optional and used only as an editor.
+
+If you do install it:
+
+Install C/C++ extension (ms-vscode.cpptools)
+
+Install CMake Tools extension
+
+⚠️ VS Code does NOT install compilers.
+
+11. Final Checklist
+
+Before building with CMake, you should have:
+
+✅ Visual Studio Community installed
+
+✅ Desktop development with C++
+
+✅ MSVC v143
+
+✅ Windows SDK
+
+✅ CMake available in PATH
+
+✅ cl works
+
+✅ cmake --version works

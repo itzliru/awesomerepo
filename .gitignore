@@ -1,0 +1,2 @@
+devkit/
+#devkit is ignored because it is over 5gb and has to many files for our repo. Unzip the Devkit if not already unzipped
