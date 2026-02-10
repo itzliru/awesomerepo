@@ -1,19 +1,19 @@
 #!/bin/bash
 
-#1.  Check if devkit.verssion was changed in the lasts pulll
-# "ORIG_HEAD" is where you were, "HEAD" is where you are now
-if [ "$CHANGED_FILE" ]; then
-    echo "detected change in devkit.version.  Generating new S3 link..."
+# Configuration
+BUCKET="devkitassets"
+FILE_KEY="devkit.rar"
+LOCAL_DESTINATION="$FILE_KEY"
 
-    BUCKET="devkitassets"
-    FILE_KEY="devkit.rar"
+echo "Checking S3 asset file: $FILE_KEY in bucket: $BUCKET"
 
-    #1.  Generate the URL using AWS CLI
-    URL=$(aws s3 presign s3://$BUCKET/$FILE_KEY --expires-in 604800)
+#Use 'aws s3 cp' to download the file from S3 to thee file directly
+# This uses your 'aws configure' credentials
+aws s3 sync s3://$BUCKET/ . --exclude "*" --include "$FILE_KEY" --region us-east-2
 
-    #2.  Save it to a file in the project directory
-    echo $URL > "./$FILE_KEY"
-    echo "S3 link updataed successfully"
+if [ $? -eq 0 ]; then
+    echo "Successfully downloaded $FILE_KEY to $LOCAL_DESTINATION"
 else
-    echo "No change to devkit.version.  Sskipping S3 link update."
+    echo "Error: Download failed.  Check your AWS credentials and/or internet connection."
+    exit 1
 fi
